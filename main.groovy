@@ -29,7 +29,7 @@ pipeline {
             },
             push to docker hub: {
                sh "docker tag nginx $USER/nginx && docker push $USER/nginx"
-            }               
+            },               
             run: {
                sh "docker run --name nginx-app -p 80:80 -v /home/jenkins/nginx.conf:/etc/nginx/nginx.conf -d nginx"
             },            
@@ -37,7 +37,7 @@ pipeline {
                sh "docker ps --format "{{.Names}}" > contianers.txt"
             },
             web app: {
-            sh "docker run --name flask-app -p 5000:5000 -d python-web-app ."
+               sh "docker run --name flask-app -p 5000:5000 -d python-web-app ."
             }               
          }
       }
