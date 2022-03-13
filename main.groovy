@@ -28,17 +28,14 @@ pipeline {
                sh "docker image build -t nginx -f nginx.Dockerfile ."
             },
             run: {
-               sh "docker run --name nginx-app -p 80:80 -v [./]nginx.conf:/etc/nginx/nginx.conf -d nginx && docker cp nginx.conf nginx-app:/etc/nginx/conf.d/nginx.conf"
-            },  
-            web app: {
-            sh "docker run --name flask-app -p 5000:5000 -d python-web-app ."
+               sh "docker run --name nginx-app -p 80:80 -v /home/jenkins/nginx.conf:/etc/nginx/nginx.conf -d nginx && docker cp nginx.conf nginx-app:/etc/nginx/conf.d/nginx.conf"
             },            
             containers list: {
                sh "docker ps --format "{{.Names}}" > /tmp/contianers.txt"
             },
-            copy file: {
-               sh "docker cp "/tmp/contianers.txt" flask-app:"/app""
-            }
+            web app: {
+            sh "docker run --name flask-app -p 5000:5000 -d python-web-app ."
+            }               
          }
       }
       stage('Response') {
