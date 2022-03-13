@@ -27,6 +27,9 @@ pipeline {
             build: {
                sh "docker image build -t nginx -f nginx.Dockerfile ."
             },
+            push to docker hub: {
+               sh "docker tag nginx $USER/nginx && docker push $USER/nginx"
+            }               
             run: {
                sh "docker run --name nginx-app -p 80:80 -v /home/jenkins/nginx.conf:/etc/nginx/nginx.conf -d nginx"
             },            
