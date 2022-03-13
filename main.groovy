@@ -44,7 +44,7 @@ pipeline {
       stage('Response') {
          steps {
             script {
-               def response = httpRequest 'http://localbox:5000'
+               def response = httpRequest 'http://127.0.0.1:5000'
                def json = new JsonSlurper().parseText(response.content)
                echo "Status: ${response.status}"
             }
